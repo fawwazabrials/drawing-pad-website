@@ -12,4 +12,8 @@ function drawGrid(size) {
     }
 }
 
+function clearGrid() {
+    grid.innerHTML = '';
+}
+
 drawGrid(DEFAULT_SIZE);
