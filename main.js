@@ -6,6 +6,16 @@ const body = document.querySelector('body');
 const grid = document.querySelector('.container');
 const resetBtn = document.querySelector('.reset');
 const eraserBtn = document.querySelector('.eraser');
+buttons = [resetBtn, eraserBtn];
+
+resetBtn.addEventListener('click', reset);
+eraserBtn.addEventListener('click', () => {
+    if (fill === 'eraser') {
+        fill = 'default';
+    } else {
+        fill = 'eraser';
+    } updateButtons();
+});
 
 function drawGrid(size) {
     grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -30,6 +40,8 @@ function fillGrid(e) {
 }
 
 function reset() {
+    fill = 'default';
+    updateButtons();
     clearGrid();
     drawGrid(size);
     listen();
@@ -46,13 +58,23 @@ function listen() {
         gridItems[i].addEventListener('mouseover', fillGrid);
         gridItems[i].addEventListener('mousedown', fillGrid);
     }
-
-    // create event listener for reset button
-    resetBtn.addEventListener('click', reset);
-
-    // create event listener for erase button; toggles eraser ON or OFF
-    eraserBtn.addEventListener('click', () => fill = fill === 'default' ? 'eraser' : 'default');
 }
+
+function updateButtons() {
+    if (fill === 'default') {
+        buttons.forEach(e => {
+            e.style.backgroundColor = 'transparent';
+            e.style.color = 'black';
+        });
+    }
+
+    if (fill === 'eraser') {
+        eraserBtn.style.backgroundColor = 'black';
+        eraserBtn.style.color = 'white';
+    }
+}
+
+
 
 drawGrid(size);
 listen();
