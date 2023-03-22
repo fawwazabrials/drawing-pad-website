@@ -40,3 +40,12 @@ body {
     border-color: black;
     border-radius: 8px;
 }
+
+.options {
+    margin-bottom: 32px;
+}
+
+.slider {
+    display: flex;
+    gap: 16px;
+}

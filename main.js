@@ -6,6 +6,9 @@ const body = document.querySelector('body');
 const grid = document.querySelector('.container');
 const resetBtn = document.querySelector('.reset');
 const eraserBtn = document.querySelector('.eraser');
+const slider = document.querySelector('.slider-value');
+const sliderText = document.querySelector('.slider-text');
+
 buttons = [resetBtn, eraserBtn];
 
 resetBtn.addEventListener('click', reset);
@@ -74,7 +77,11 @@ function updateButtons() {
     }
 }
 
-
-
 drawGrid(size);
 listen();
+
+slider.oninput = () => {
+    size = slider.value;
+    sliderText.innerHTML = size;
+    reset();
+}
