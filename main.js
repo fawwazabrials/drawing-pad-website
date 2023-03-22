@@ -2,7 +2,10 @@ let size = 16;
 let clicked = false;
 let fill = 'default'
 
+const body = document.querySelector('body');
 const grid = document.querySelector('.container');
+const resetBtn = document.querySelector('.reset');
+const eraserBtn = document.querySelector('.eraser');
 
 function drawGrid(size) {
     grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -34,8 +37,8 @@ function reset() {
 
 function listen() {
     // create event listener for click / no click
-    document.querySelector('body').addEventListener('mousedown', (e) => clicked = true);
-    document.querySelector('body').addEventListener('mouseup', (e) => clicked = false);
+    body.addEventListener('mousedown', (e) => clicked = true);
+    body.addEventListener('mouseup', (e) => clicked = false);
 
     // create event listeners for grid pixels
     gridItems = document.querySelectorAll('.grid-item');
@@ -45,10 +48,10 @@ function listen() {
     }
 
     // create event listener for reset button
-    document.querySelector('.reset').addEventListener('click', reset);
+    resetBtn.addEventListener('click', reset);
 
     // create event listener for erase button; toggles eraser ON or OFF
-    document.querySelector('.eraser').addEventListener('click', () => fill = fill === 'default' ? 'eraser' : 'default');
+    eraserBtn.addEventListener('click', () => fill = fill === 'default' ? 'eraser' : 'default');
 }
 
 drawGrid(size);
