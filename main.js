@@ -1,5 +1,6 @@
 let size = 16;
 let clicked = false;
+let fill = 'default'
 
 const grid = document.querySelector('.container');
 
@@ -20,7 +21,8 @@ function clearGrid() {
 
 function fillGrid(e) {
     if ((e.type === 'mouseover' && clicked) || (e.type === 'mousedown')) {
-        e.target.style.backgroundColor = 'black';
+        if (fill === 'default') e.target.style.backgroundColor = 'black';
+        if (fill === 'eraser') e.target.style.backgroundColor = 'transparent';
     }
 }
 
@@ -44,6 +46,9 @@ function listen() {
 
     // create event listener for reset button
     document.querySelector('.reset').addEventListener('click', reset);
+
+    // create event listener for erase button; toggles eraser ON or OFF
+    document.querySelector('.eraser').addEventListener('click', () => fill = fill === 'default' ? 'eraser' : 'default');
 }
 
 drawGrid(size);
