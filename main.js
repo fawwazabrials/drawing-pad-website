@@ -1,4 +1,4 @@
-const DEFAULT_SIZE = 16;
+let size = 16;
 let clicked = false;
 
 const grid = document.querySelector('.container');
@@ -18,10 +18,16 @@ function clearGrid() {
     grid.innerHTML = '';
 }
 
-function fillGrid(el) {
-    if (clicked) {
-        el.target.style.backgroundColor = 'black';
+function fillGrid(e) {
+    if ((e.type === 'mouseover' && clicked) || (e.type === 'mousedown')) {
+        e.target.style.backgroundColor = 'black';
     }
+}
+
+function reset() {
+    clearGrid();
+    drawGrid(size);
+    listen();
 }
 
 function listen() {
@@ -33,8 +39,12 @@ function listen() {
     gridItems = document.querySelectorAll('.grid-item');
     for (let i=0; i<gridItems.length; i++) {
         gridItems[i].addEventListener('mouseover', fillGrid);
+        gridItems[i].addEventListener('mousedown', fillGrid);
     }
+
+    // create event listener for reset button
+    document.querySelector('.reset').addEventListener('click', reset);
 }
 
-drawGrid(DEFAULT_SIZE);
+drawGrid(size);
 listen();
