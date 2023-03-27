@@ -39,11 +39,17 @@ function fillGrid(e) {
     - 'eraser': fill with white
     - 'rainbow': fill with random RGB color
     - 'shade': fill with increase of 10% opacity */
-    console.log(fillType)
     if ((e.type === 'mouseover' && clicked) || (e.type === 'mousedown')) {
         if (fillType === 'default') e.target.style.backgroundColor = 'black';
         else if (fillType === 'eraser') e.target.style.backgroundColor = 'white';
-        else if (fillType === 'rainbow') e.target.style.backgroundColor = `rgb(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256})`;
+        else if (fillType === 'rainbow') e.target.style.backgroundColor = `rgba(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256}, ${Math.random()})`;
+        else if (fillType === 'shade') {
+            if (e.target.style.backgroundColor === '') e.target.style.backgroundColor = 'rgba(0,0,0,0.1)';
+            else {
+                let nums = e.target.style.backgroundColor.match(/\d+\.?\d*/g);
+                e.target.style.backgroundColor = `rgba(${parseInt(nums[0])},${parseInt(nums[1])},${parseInt(nums[2])},${parseFloat(nums[3]) + 0.1})`;
+            }
+        }
     }
 }
 
@@ -96,7 +102,6 @@ rainbow.addEventListener('click', () => {
 shade.addEventListener('click', () => {
     updateButtons('shade');
 })
-
 
 
 drawGrid();
