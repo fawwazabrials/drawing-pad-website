@@ -20,6 +20,16 @@ function drawGrid() {
     }
 }
 
+function clearGrid() {
+    grid.innerHTML = '';
+}
+
+function resetGrid() {
+    clearGrid()
+    drawGrid();
+    listenGrid();
+}
+
 function fillGrid(e) {
 /* Fill grid with type.
     - 'default': fill with black
