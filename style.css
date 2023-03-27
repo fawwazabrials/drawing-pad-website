@@ -45,7 +45,7 @@ body {
 }
 
 .grid-item {
-    border: 1px transparent black;
+    border: 1px solid black;
 }
 
 .settings {
@@ -94,6 +94,9 @@ body {
     margin: 0;
     padding: 0;
     font-size: 1.15rem;
+
+    position: relative;
+    top: 30px;
 }
 
 @media (width > 875px) {

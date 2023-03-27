@@ -7,6 +7,8 @@ const body = document.querySelector('body');
 const eraser = document.querySelector('#eraser');
 const rainbow = document.querySelector('#rainbow');
 const shade = document.querySelector('#shade');
+const slider = document.querySelector('.slider');
+const sliderText = document.querySelector('.slider-value');
 
 function drawGrid() {
 /* Draw grid on grid container based on size */
@@ -103,6 +105,12 @@ shade.addEventListener('click', () => {
     updateButtons('shade');
 })
 
+/* SLIDER */
+slider.oninput = () => {
+    size = slider.value;
+    sliderText.innerHTML = size;
+    resetGrid();
+}
 
 drawGrid();
 listenGrid()
