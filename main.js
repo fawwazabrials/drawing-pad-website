@@ -3,7 +3,10 @@ let clicked = false;
 let fillType = 'default'
 
 const grid = document.querySelector('.grid');
-const body = document.querySelector('body')
+const body = document.querySelector('body');
+const eraser = document.querySelector('#eraser');
+const rainbow = document.querySelector('#rainbow');
+const shade = document.querySelector('#shade');
 
 function drawGrid() {
 /* Draw grid on grid container based on size */
@@ -56,6 +59,43 @@ function listenGrid() {
         gridItems[i].addEventListener('mousedown', fillGrid);
     }
 }
+
+/* BUTTONS */
+function updateButtons(type) {
+    fillType = fillType === type ? 'default' : type;
+
+    if (fillType === 'eraser') {
+        eraser.classList.add("btn-pressed");
+        shade.classList.remove("btn-pressed");
+        rainbow.classList.remove("btn-pressed");
+    } else if (fillType === 'rainbow') {
+        eraser.classList.remove("btn-pressed");
+        shade.classList.remove("btn-pressed");
+        rainbow.classList.add("btn-pressed");
+    } else if (fillType === 'shade') {
+        eraser.classList.remove("btn-pressed");
+        shade.classList.add("btn-pressed");
+        rainbow.classList.remove("btn-pressed");
+    } else {
+        eraser.classList.remove("btn-pressed");
+        shade.classList.remove("btn-pressed");
+        rainbow.classList.remove("btn-pressed");
+    }
+}
+
+eraser.addEventListener('click', () => {
+    updateButtons('eraser');
+})
+
+rainbow.addEventListener('click', () => {
+    updateButtons('rainbow');
+})
+
+shade.addEventListener('click', () => {
+    updateButtons('shade');
+})
+
+
 
 drawGrid();
 listenGrid()
