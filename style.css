@@ -77,6 +77,25 @@ body {
     background-color: white;
 }
 
+.slider-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.slider {
+    width: 85%;
+}
+
+.slider-value {
+    position: relative;
+}
+
+.slider-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.15rem;
+}
+
 @media (width > 875px) {
     .grid {
         width: 500px;
