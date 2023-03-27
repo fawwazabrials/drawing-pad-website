@@ -9,22 +9,30 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="options">
-        <div class="slider-container">
-            <h3>Sketchpad size</h3>
-            <div class="slider">
-                <input type="range" class="slider-value" min="1" max="100" value="16">
-                <h3 class="slider-text"></h3>
+<body class="body">
+    <header>
+        <h1 class="title">Draw here!</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="grid">
+
+            </div>
+            <div class="settings">
+                <button class="btn" onclick="resetGrid()">Reset</button>
+                <button class="btn" id="eraser">Eraser</button>
+                <button class="btn" id="shade">Shade</button>
+                <button class="btn" id="rainbow">Rainbow</button>
+                
+                <p class="slider-title">Grid size</p>
+                <div class="slider-container">
+                    <input type="range" min="1" max="100" value="16" class="slider">
+                    <p class="slider-value">10</p>
+                </div>
+
             </div>
         </div>
-    </div>
-    <h1>Draw here!</h1>
-    <div class="container"></div>
-    <div class="buttons">
-        <button class="btn reset">Reset</button>
-        <button class="btn eraser">Eraser</button>
-    </div>
+    </main>
     <script src="main.js"></script>
 </body>
 </html>

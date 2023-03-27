@@ -1,27 +1,21 @@
 let size = 16;
 let clicked = false;
-let fill = 'default'
+let fillType = 'default'
 
+const grid = document.querySelector('.grid');
 const body = document.querySelector('body');
-const grid = document.querySelector('.container');
-const resetBtn = document.querySelector('.reset');
-const eraserBtn = document.querySelector('.eraser');
-const slider = document.querySelector('.slider-value');
-const sliderText = document.querySelector('.slider-text');
+const eraser = document.querySelector('#eraser');
+const rainbow = document.querySelector('#rainbow');
+const shade = document.querySelector('#shade');
+const slider = document.querySelector('.slider');
+const sliderText = document.querySelector('.slider-value');
 
-buttons = [resetBtn, eraserBtn];
+function drawGrid() {
+/* Draw grid on grid container based on size */
 
-resetBtn.addEventListener('click', reset);
-eraserBtn.addEventListener('click', () => {
-    if (fill === 'eraser') {
-        fill = 'default';
-    } else {
-        fill = 'eraser';
-    } updateButtons();
-});
-
-function drawGrid(size) {
     grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
 
     for (let i=0; i<size*size; i++) {
         const gridItem = document.createElement('div');
@@ -35,25 +29,38 @@ function clearGrid() {
     grid.innerHTML = '';
 }
 
+function resetGrid() {
+    clearGrid()
+    drawGrid();
+    listenGrid();
+}
+
 function fillGrid(e) {
+/* Fill grid with type.
+    - 'default': fill with black
+    - 'eraser': fill with white
+    - 'rainbow': fill with random RGB color
+    - 'shade': fill with increase of 10% opacity */
     if ((e.type === 'mouseover' && clicked) || (e.type === 'mousedown')) {
-        if (fill === 'default') e.target.style.backgroundColor = 'black';
-        if (fill === 'eraser') e.target.style.backgroundColor = 'transparent';
+        if (fillType === 'default') e.target.style.backgroundColor = 'black';
+        else if (fillType === 'eraser') e.target.style.backgroundColor = 'white';
+        else if (fillType === 'rainbow') e.target.style.backgroundColor = `rgba(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256}, ${Math.random()})`;
+        else if (fillType === 'shade') {
+            if (e.target.style.backgroundColor === '') e.target.style.backgroundColor = 'rgba(0,0,0,0.1)';
+            else {
+                let nums = e.target.style.backgroundColor.match(/\d+\.?\d*/g);
+                e.target.style.backgroundColor = `rgba(${parseInt(nums[0])},${parseInt(nums[1])},${parseInt(nums[2])},${parseFloat(nums[3]) + 0.1})`;
+            }
+        }
     }
 }
 
-function reset() {
-    fill = 'default';
-    updateButtons();
-    clearGrid();
-    drawGrid(size);
-    listen();
-}
+function listenGrid() {
+/* Create event listeners for each grid items */
 
-function listen() {
     // create event listener for click / no click
-    body.addEventListener('mousedown', (e) => clicked = true);
-    body.addEventListener('mouseup', (e) => clicked = false);
+    body.addEventListener('mousedown', e => clicked = true);
+    body.addEventListener('mouseup', e => clicked = false);
 
     // create event listeners for grid pixels
     gridItems = document.querySelectorAll('.grid-item');
@@ -63,25 +70,47 @@ function listen() {
     }
 }
 
-function updateButtons() {
-    if (fill === 'default') {
-        buttons.forEach(e => {
-            e.style.backgroundColor = 'transparent';
-            e.style.color = 'black';
-        });
-    }
+/* BUTTONS */
+function updateButtons(type) {
+    fillType = fillType === type ? 'default' : type;
 
-    if (fill === 'eraser') {
-        eraserBtn.style.backgroundColor = 'black';
-        eraserBtn.style.color = 'white';
+    if (fillType === 'eraser') {
+        eraser.classList.add("btn-pressed");
+        shade.classList.remove("btn-pressed");
+        rainbow.classList.remove("btn-pressed");
+    } else if (fillType === 'rainbow') {
+        eraser.classList.remove("btn-pressed");
+        shade.classList.remove("btn-pressed");
+        rainbow.classList.add("btn-pressed");
+    } else if (fillType === 'shade') {
+        eraser.classList.remove("btn-pressed");
+        shade.classList.add("btn-pressed");
+        rainbow.classList.remove("btn-pressed");
+    } else {
+        eraser.classList.remove("btn-pressed");
+        shade.classList.remove("btn-pressed");
+        rainbow.classList.remove("btn-pressed");
     }
 }
 
-drawGrid(size);
-listen();
+eraser.addEventListener('click', () => {
+    updateButtons('eraser');
+})
 
+rainbow.addEventListener('click', () => {
+    updateButtons('rainbow');
+})
+
+shade.addEventListener('click', () => {
+    updateButtons('shade');
+})
+
+/* SLIDER */
 slider.oninput = () => {
     size = slider.value;
     sliderText.innerHTML = size;
-    reset();
+    resetGrid();
 }
+
+drawGrid();
+listenGrid()
