@@ -42,6 +42,7 @@ function fillGrid(e) {
 
     if ((e.type === 'mouseover' && clicked) || (e.type === 'mousedown')) {
         if (fillType === 'default') e.target.style.backgroundColor = 'black';
+        else if (fillType === 'eraser') e.target.style.backgroundColor = 'white';
     }
 }
 
